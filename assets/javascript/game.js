@@ -9,35 +9,53 @@ let winCount = 0;
 let lossesCount = 0;
 let guessesLeft = 5;
 let guessesMade = [];
+let correctGuesses = [];
 
 // Randomly chooses a word from the array of words
-window.onload = function chooseWord() {
+// window.onload = function chooseWord() {
     let randomWord = words[Math.floor(Math.random() * words.length)];
     console.log(randomWord);
-}
+// };
+
+// Function to check correctGuesses and randomWord
 
 // Function run whenever user presses a key.
 document.onkeyup = function (event) {
-    let keyPressed = event.key;
+    let userGuess = event.key;
 
     // Check is key pressed is an alphabet
     for (let i = 0; i < alphabet.length; i++) {
-        if (keyPressed === alphabet[i]) {
-            // Assigns key the user pressed.
-            let userGuess = keyPressed;
-            console.log(userGuess + ' is a letter');
+        if (userGuess === alphabet[i]) {
+            console.log(userGuess + ' is a letter.');
         }
-    }
+    };
 
     // call guessChecker function
     guessChecker(userGuess);
     
     // Checks the userGuess against the word
     function guessChecker(userGuess) {
-        for (let i = 0; i < randomWord.length; i++) {
-            if (userGuess === randomWord[i]) {
-
+        // Make sure the userGuess hasn't already been guessed
+        for (let i = 0; i < guessesMade.length; i++) {
+            if ((userGuess !== guessesMade[i]) && (guessesLeft > 0)) {
+                for (let i = 0; i < randomWord.length; i++) {
+                    if (userGuess === randomWord[i]) {
+                        correctGuesses += userGuess;
+                        console.log(correctGuesses + ' correct guesses.');
+                        guessesMade += userGuess;
+                        console.log(guessesMade + ' have been guessed.');
+                    } else {
+                        guessesLeft--;
+                        guessesMade += userGuess;
+                    }
+                }
+            } 
+            // When guessesLeft is 0, user loses. Generate new word.
+            if (guessesLeft === 0) {
+                lossesCount++;
+                guessesLeft = 5;
+                guessesMade = [];
             }
-        }
+        }; // Tell user they have already made this guess
     }
 }
