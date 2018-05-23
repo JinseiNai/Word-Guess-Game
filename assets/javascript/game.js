@@ -11,7 +11,7 @@ let lossesCount = 0;
 let guessesLeft = 5;
 let wrongGuesses = [];
 let correctGuesses = [];
-// let randomWord;
+let answerArr = [];
 
 // Randomly chooses a word from the array of words
 function generateWord() {
@@ -28,6 +28,14 @@ function grabWord() {
 $(document).ready(function () {
     let randomWord = grabWord();
     console.log(randomWord + ' is random.');
+    // Set up the answer blanks
+    for (let i = 0; i < randomWord.length; i++) {
+        answerArr[i] = "__";
+    }
+    console.log(answerArr);
+
+    // Show letter blanks
+    document.querySelector(".word").innerHTML = answerArr.join(" ");
 
     // Function runs whenever a user pressed key
     document.onkeyup = function (event) {
