@@ -13,17 +13,6 @@ let wrongGuesses = [];
 let correctGuesses = [];
 let answerArr = [];
 
-// Randomly chooses a word from the array of words
-function generateWord() {
-    let generate = words[Math.floor(Math.random() * words.length)];
-    return generate;
-}
-// Gets word from generateWord
-function grabWord() {
-    let getWord = generateWord();
-    return getWord;
-}
-
 // When browser loads, have word ready
 $(document).ready(function () {
     let randomWord = grabWord();
@@ -34,8 +23,7 @@ $(document).ready(function () {
     }
     console.log(answerArr);
 
-    // Show letter blanks
-    document.querySelector(".word").innerHTML = answerArr.join(" ");
+    displayWord();
 
     // Function runs whenever a user pressed key
     document.onkeyup = function (event) {
@@ -47,7 +35,6 @@ $(document).ready(function () {
                 guessChecker();
             }
         }
-
         // Checks user guess against random word
         function guessChecker() {
             // If there are guesses remaining
@@ -55,6 +42,7 @@ $(document).ready(function () {
                 // Check if letter guessed is in the word
                 if ((randomWord.indexOf(userGuess)) >= 0) {
                     correctGuesses += userGuess;
+                    answerArr += userGuess;
                     console.log('Correct guess');
                 } else {
                     guessesLeft--;
@@ -70,6 +58,19 @@ $(document).ready(function () {
                 }
             }
         }
+
+        // Display correct guess
+        function displayCorrect() {
+            for (let i = 0; i < randomWord.length; i++) {
+                if (randomWord[i] === userGuess) {
+                    answerArr[i] = userGuess;
+                }
+            }
+        }
+
+        displayCorrect();
+        displayWord();
+
         let status =
             "<p>Wins: " + winCount + "</p>" +
             "<p>Losses: " + lossesCount + "</p>" +
@@ -81,4 +82,24 @@ $(document).ready(function () {
     };
 
 });
+// Randomly chooses a word from the array of words
+function generateWord() {
+    let generate = words[Math.floor(Math.random() * words.length)];
+    return generate;
+}
+// Gets word from generateWord
+function grabWord() {
+    let getWord = generateWord();
+    return getWord;
+}
+
+
+
+function displayWord() {
+    // Show letter blanks
+    document.querySelector(".word").innerHTML = answerArr;
+}
+
+
+
 
