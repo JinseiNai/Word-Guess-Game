@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
     // Array of words to guess.
-    let words = ['basketball', 'sports', 'playoffs', 'baseball', 'badminton', 'fitness', 'kitchen', 'computer', 'television', 'family', 'aquarium', 'annoying', 'relationship', 'music', 'something', 'grocery', 'avenger', 'developer', 'kingdom', 'designer', 'business', 'marketplace', 'explore', 'portfolio', 'awesome', 'fairy', 'difficult', 'random', 'phone', 'monitor', 'tablet', 'extension', 'contributions', 'customize', 'repositories'];
+    let words = ['basketball', 'sports', 'playoffs', 'baseball', 'badminton', 'fitness', 'kitchen', 'computer', 'television', 'family', 'aquarium', 'annoying', 'relationship', 'music', 'something', 'grocery', 'avenger', 'developer', 'kingdom', 'designer', 'business', 'marketplace', 'explore', 'portfolio', 'awesome', 'fairy', 'difficult', 'random', 'phone', 'monitor', 'tablet', 'extension', 'contributions', 'customize', 'repositories', 'series', 'championship', 'major', 'league', 'minors', 'youtube', 'twitch', 'dauntless', 'anime'];
 
     // Alphabet letters that the user can use.
     let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -15,15 +15,12 @@ $(document).ready(function () {
     let correctGuesses = [];
     let answerArr = [];
     let userGuess;
+    let randomWord = [];
 
-    let randomWord = generateWord();
-    console.log(randomWord + ' is random.');
-    // Set up the answer blanks
-    for (let i = 0; i < randomWord.length; i++) {
-        answerArr[i] = " __ ";
-    }
-    console.log(answerArr);
+    // Set word on window load
+    settingWord();
 
+    // Display underscore for letters
     displayWord();
 
     // Function runs whenever a user pressed key
@@ -41,16 +38,20 @@ $(document).ready(function () {
             // Check if same guess has been made
             if (wrongGuesses.indexOf(userGuess) <= -1 && correctGuesses.indexOf(userGuess) <= -1) {
                 // Check if letter guessed is in the word
-                if ((randomWord.indexOf(userGuess)) >= 0) {
-                    console.log(randomWord + ' is being checked')
+                if ((randomWord[0].indexOf(userGuess)) >= 0) {
                     correctGuesses += userGuess;
-                    console.log('Correct guess');
                     displayCorrect();
                     displayWord();
+                    if (answerArr.join("") == randomWord[0]) {
+                        alert("Very nice! You guessed the word '" + randomWord[0] + "' correctly!");
+                        winCount++;
+                        resetGame();
+                        settingWord();
+                        displayWord();
+                    }
                 } else {
                     guessesLeft--;
                     wrongGuesses += userGuess;
-                    console.log('Wrong guess');
                     if (guessesLeft === 0) {
                         lossesCount++;
                         alert('You Lost!');
@@ -62,26 +63,11 @@ $(document).ready(function () {
             }
 
         }
-        // Suppose to be a function
-        // if (guessesLeft === 0) {
-        //     lossesCount++;
-        //     alert('You Lost!');
-        //     resetGame();
-        //     let randomWord = generateWord();
-        //     console.log(randomWord + ' is random.');
-        //     // Set up the answer blanks
-        //     for (let i = 0; i < randomWord.length; i++) {
-        //         answerArr[i] = " __ ";
-        //     }
-        //     console.log(answerArr);
-        //     console.log(randomWord + ' new random');
-        //     displayWord();
-        // };
 
         // Display correct guess
         function displayCorrect() {
-            for (let i = 0; i < randomWord.length; i++) {
-                if (randomWord[i] === userGuess) {
+            for (let i = 0; i < randomWord[0].length; i++) {
+                if (randomWord[0][i] === userGuess) {
                     answerArr[i] = userGuess;
                     console.log(answerArr + ' answer');
                 }
@@ -89,8 +75,7 @@ $(document).ready(function () {
             return answerArr;
         };
 
-
-
+        // Update status for html
         let status =
             "<p>Wins: " + winCount + "</p>" +
             "<p>Losses: " + lossesCount + "</p>" +
@@ -101,35 +86,32 @@ $(document).ready(function () {
         document.querySelector(".status").innerHTML = status;
     };
 
-
     // Randomly chooses a word from the array of words
     function generateWord() {
         let generate = words[Math.floor(Math.random() * words.length)];
         return generate;
     };
 
-    // // Gets word from generateWord
-    // function grabWord() {
-    //     let getWord = generateWord();
-    //     return getWord;
-    // };
-
+    // Show letter blanks
     function displayWord() {
-        // Show letter blanks
         document.querySelector(".word").innerHTML = answerArr.join(" ");
     };
 
+    // Logs random word and set underscores
     function settingWord() {
-        let randomWord = generateWord();
-        console.log(randomWord + ' is random.');
+        randomWord = [];
+        randomWord.push(generateWord());
+        console.log(randomWord[0] + ' is random.');
         // Set up the answer blanks
-        for (let i = 0; i < randomWord.length; i++) {
+        for (let i = 0; i < randomWord[0].length; i++) {
             answerArr[i] = " __ ";
         }
         console.log(answerArr);
     };
 
+    // Reset status
     function resetGame() {
+        randomWord = [];
         answerArr = [];
         guessesLeft = 5;
         wrongGuesses = [];
