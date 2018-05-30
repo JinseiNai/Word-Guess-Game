@@ -67,7 +67,7 @@ $(document).ready(function () {
         function displayCorrect() {
             for (let i = 0; i < randomWord[0].length; i++) {
                 if (randomWord[0][i] === userGuess) {
-                    answerArr[i] = userGuess;
+                    answerArr[i] = userGuess.toLocaleUpperCase();
                     console.log(answerArr + ' answer');
                 }
             }
