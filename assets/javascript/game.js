@@ -42,7 +42,7 @@ $(document).ready(function () {
                     displayCorrect();
                     displayWord();
                     if (answerArr.join("") == randomWord[0]) {
-                        alert("Very nice! You guessed the word '" + randomWord[0] + "' correctly!");
+                        alert("Very nice! You guessed the word '" + randomWord[0].toLocaleUpperCase() + "' correctly!");
                         winCount++;
                         resetGame();
                         settingWord();
@@ -53,7 +53,7 @@ $(document).ready(function () {
                     wrongGuesses += userGuess;
                     if (guessesLeft === 0) {
                         lossesCount++;
-                        alert("You Lost! The word was '" + randomWord[0] + "'!");
+                        alert("You Lost! The word was '" + randomWord[0].toLocaleUpperCase() + "'!");
                         resetGame();
                         settingWord();
                         displayWord();
@@ -78,7 +78,7 @@ $(document).ready(function () {
         let status =
             "<p>Guesses Left: " + guessesLeft + "</p>" +
             "<p>Wrong guesses so far: " + "<span class='spacing'>" + wrongGuesses + "</span>" + "</p>" +
-            "<p>Correct guesses so far: " + correctGuesses + "</p>" +
+            "<p>Correct guesses so far: " + "<span class='spacing'>" + correctGuesses + "</span>" + "</p>" +
             "<p>Wins: " + winCount + "</p>" +
             "<p>Losses: " + lossesCount + "</p>";
 

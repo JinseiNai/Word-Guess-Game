@@ -13,3 +13,13 @@
 .card {
     border-bottom: none;
 }
+
+.word {
+    margin-top: 50px; 
+}
+
+.spacing {
+    letter-spacing: 2px;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
