@@ -17,11 +17,10 @@ $(document).ready(function () {
     let userGuess;
     let randomWord = [];
 
-    // Set word on window load
-    settingWord();
-
-    // Display underscore for letters
-    displayWord();
+        // Set word on window load
+        settingWord();
+        // Display underscore for letters
+        displayWord();
 
     // Function runs whenever a user pressed key
     document.onkeyup = function (event) {
@@ -54,7 +53,7 @@ $(document).ready(function () {
                     wrongGuesses += userGuess;
                     if (guessesLeft === 0) {
                         lossesCount++;
-                        alert('You Lost!');
+                        alert("You Lost! The word was '" + randomWord[0] + "'!");
                         resetGame();
                         settingWord();
                         displayWord();
@@ -77,11 +76,11 @@ $(document).ready(function () {
 
         // Update status for html
         let status =
-            "<p>Wins: " + winCount + "</p>" +
-            "<p>Losses: " + lossesCount + "</p>" +
             "<p>Guesses Left: " + guessesLeft + "</p>" +
             "<p>Wrong guesses so far: " + "<span class='spacing'>" + wrongGuesses + "</span>" + "</p>" +
-            "<p>Correct guesses so far: " + correctGuesses + "</p>";
+            "<p>Correct guesses so far: " + correctGuesses + "</p>" +
+            "<p>Wins: " + winCount + "</p>" +
+            "<p>Losses: " + lossesCount + "</p>";
 
         document.querySelector(".status").innerHTML = status;
     };
